@@ -1,0 +1,3 @@
+- JDBC cơ bản, tương tác với database mysql. Những thao tác thêm sửa xóa, lấy danh sách ...
+- JAVA nâng cao, áp dụng các khái niệm reflection, annotation, generic type trong quá trình làm việc vs database
+- 
