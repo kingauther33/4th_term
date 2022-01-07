@@ -1,10 +1,14 @@
 package com.example.javaspringdemo.controller;
 
 import com.example.javaspringdemo.entity.Food;
+import com.example.javaspringdemo.service.FoodService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * Lưu ý khi đặt link cũng như method của 1 api
@@ -21,84 +25,72 @@ import java.util.HashMap;
 @RequestMapping(path = "api/v1/foods")
 public class FoodController {
 
-    private static ArrayList<Food> listFood;
-
-    static {
-        listFood = new ArrayList<>();
-        listFood.add(new Food(1, "Food 01", "Food 01", 1000, 1));
-        listFood.add(new Food(2, "Food 02", "Food 02", 1000, 1));
-        listFood.add(new Food(3, "Food 03", "Food 03", 1000, 1));
-        listFood.add(new Food(4, "Food 04", "Food 04", 1000, 1));
-        listFood.add(new Food(5, "Food 05", "Food 05", 1000, 1));
-        listFood.add(new Food(6, "Food 06", "Food 06", 1000, 1));
-    }
+    @Autowired
+    private FoodService foodService;
 
     // create
     @RequestMapping(method = RequestMethod.POST)
-    public Food create(@RequestBody Food food) {
-        listFood.add(food);
-
-        return food;
+    public ResponseEntity<Food> create(@RequestBody Food food) {
+//        listFood.add(food);
+        foodService.save(food);
+        return new ResponseEntity<>(food, HttpStatus.CREATED);
     }
 
     // get List
     @RequestMapping(method = RequestMethod.GET)
-    public HashMap<String, Object> getList(
+    public ResponseEntity<Object> getList(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int limit) {
         HashMap<String, Object> response = new HashMap<>();
         response.put("page", page);
         response.put("limit", limit);
-        response.put("data", listFood);
+        response.put("data", foodService.findAll());
 
-        return response;
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // get details
     @RequestMapping(method = RequestMethod.GET, path = "{id}")
-    public Food getDetail(@PathVariable int id) {
-        for (Food food :
-                listFood) {
-            if (food.getId() == id) {
-                return food;
-            }
+    public ResponseEntity<Object> getDetail(@PathVariable int id) {
+        Optional<Food> optionalFood = foodService.findById(id);
+        if (optionalFood.isPresent()) {
+            return new ResponseEntity<>(optionalFood.get(), HttpStatus.OK);
         }
 
-        return new Food();
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     // update
     @RequestMapping(method = RequestMethod.PUT, path = "{id}")
-    public Food update(@PathVariable int id, @RequestBody Food updatedFood) {
-        Food foodExists = null;
-        for (Food food:
-             listFood) {
-            if (food.getId() == id) {
-                foodExists = food;
-            }
+    public ResponseEntity<Object> update(@PathVariable int id, @RequestBody Food updatedFood) {
+        Optional<Food> optionalFood = foodService.findById(id);
+
+        // trường hợp = null trả 404.
+        if (optionalFood.isPresent()) {
+            Food food = optionalFood.get();
+            food.setName(updatedFood.getName());
+            food.setDescription(updatedFood.getDescription());
+            food.setPrice(updatedFood.getPrice());
+            food.setStatus(updatedFood.getStatus());
+            foodService.save(food);
+
+            return new ResponseEntity<>(food, HttpStatus.OK);
         }
-        if (foodExists != null) {
-            foodExists.setName(updatedFood.getName());
-            foodExists.setDescription(updatedFood.getDescription());
-            foodExists.setPrice(updatedFood.getPrice());
-            foodExists.setStatus(updatedFood.getStatus());
-        }
-        return foodExists;
+
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     // delete
     @RequestMapping(method = RequestMethod.DELETE, path = "{id}")
-    public boolean delete(@PathVariable int id) {
-        int indexItem = -1;
-        for (int i = 0; i < listFood.size(); i++) {
-            if(listFood.get(i).getId() == id) {
-                indexItem = i;
-            }
+    public ResponseEntity<Object> delete(@PathVariable int id) {
+        Optional<Food> optionalFood = foodService.findById(id);
+
+        // trường hợp = null trả 404.
+        if (optionalFood.isPresent()) {
+            foodService.delete(optionalFood.get());
+            return new ResponseEntity<>(true, HttpStatus.OK);
         }
-        if (indexItem == -1) return false;
 
-        listFood.remove(indexItem);
-
-        return true;
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     }
 }
