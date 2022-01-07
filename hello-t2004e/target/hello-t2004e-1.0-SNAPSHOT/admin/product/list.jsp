@@ -1,6 +1,9 @@
+<%@ page import="com.t2004e.hellot2004e.entity.Product" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ taglib prefix="mf" uri="http://example.com/functions" %>
 <%
     request.setCharacterEncoding("utf-8");
-    String name = String.valueOf(request.getAttribute("name"));
+    ArrayList<Product> list = (ArrayList<Product>) request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -29,36 +32,52 @@
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
-    <h2><%= name%></h2>
     <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
         <h5><b><i class="fa fa-list"></i> List Products</b></h5>
+        <strong>${mf:addTwoNumber(1, 2)}</strong>
     </header>
 
     <div class="w3-row-padding w3-margin-bottom">
         <table class="w3-table-all w3-hoverable">
             <thead>
             <tr class="w3-light-grey">
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Points</th>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
             </tr>
             </thead>
-            <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
+            <tbody>
+            <%
+                for (int i = 0; i < list.size(); i++) {
+            %>
+            <tr class="w3-light-grey">
+                <th><%=list.get(i).getId()%>
+                </th>
+                <th>
+                    <img src="<%=list.get(i).getThumbnail()%>" class="w3-border w3-padding" width="100" alt="<%=list.get(i).getName()%>">
+                </th>
+                <th><%=list.get(i).getName()%>
+                </th>
+                <th><%=list.get(i).getPrice()%>
+                </th>
+                <th><%=list.get(i).getPrice()%>
+                </th>
+                <th><%=list.get(i).getStatus()%>
+                </th>
+                <th>
+                    <a href="/admin/product/detail?id=<%=list.get(i).getId()%>">Detail</a>&nbsp;
+                    <a href="/admin/product/edit?id=<%=list.get(i).getId()%>">Edit</a>&nbsp;
+                    <a class="btn-delete" onclick="deleteProduct(<%=list.get(i).getId()%>)" href="javascript:void(0)">Delete</a>&nbsp;
+                </th>
             </tr>
-            <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-            </tr>
-            <tr>
-                <td>Adam</td>
-                <td>Johnson</td>
-                <td>67</td>
-            </tr>
+            <%
+                }
+            %>
+            </tbody>
         </table>
     </div>
 
@@ -67,8 +86,21 @@
 
     <!-- End page content -->
 </div>
-
 <jsp:include page="/admin/include/script.jsp"/>
-
+<script>
+    function deleteProduct(id) {
+        if(confirm("Bạn có chắc chắn muốn xóa sản phẩm không?")) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                    alert('Delete thành công');
+                    window.location.reload();
+                }
+            }
+            xhr.open('DELETE', '/admin/product/delete?id=' + id);
+            xhr.send();
+        }
+    }
+</script>
 </body>
 </html>

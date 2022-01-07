@@ -1,18 +1,17 @@
-package com.t2004e.hellot2004e.main;
+package com.t2004e.hellot2004e.util;
 
 import com.t2004e.hellot2004e.entity.Product;
 import com.t2004e.hellot2004e.repository.JpaRepository;
 
+import java.util.List;
+
 public class Example {
     public static void main(String[] args) {
-        JpaRepository<Product> productJpaRepository = new JpaRepository<>(Product.class);
-        productJpaRepository.toList();
-        // handle EXCEPTION
-        try {
-            proactiveHandleError("Hung");
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            System.err.println("Xin lỗi quý khách...");
+        JpaRepository<Product> jpaRepository = new JpaRepository<>(Product.class);
+        List<Product> list = jpaRepository.where("price", ">=", "10000");
+        for (Product p :
+                list) {
+            System.out.println(p.toString());
         }
     }
 

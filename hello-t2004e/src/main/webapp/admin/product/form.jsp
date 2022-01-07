@@ -1,13 +1,24 @@
+<%@ page import="com.t2004e.hellot2004e.entity.Product" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
     request.setCharacterEncoding("utf-8");
+    Product product = (Product) request.getAttribute("product");
+    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
+    if (product == null) {
+        product = new Product();
+    }
+    if (errors == null) {
+        errors = new HashMap<>();
+    }
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <jsp:include page="/admin/include/header.jsp">
-        <jsp:param name="title" value="My admin page"/>
+        <jsp:param name="title" value="Product form"/>
         <jsp:param name="description" value="Admin area"/>
         <jsp:param name="keywords" value="admin, page...."/>
     </jsp:include>
@@ -33,52 +44,92 @@
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:22px">
-        <h5><b><i class="fa fa-dashboard"></i> Create product</b></h5>
+        <h5><b><i class="fa fa-dashboard"></i> Product form</b></h5>
     </header>
 
     <div class="w3-row-padding w3-margin-bottom">
-        <form action="/action_page.php" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
-            <h2 class="w3-center">Contact Us</h2>
-            <a href="list">Back to list products</a>
+        <%
+            if(errors.size() > 0) {
 
-            <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
-                <div class="w3-rest">
-                    <input class="w3-input w3-border" name="first" type="text" placeholder="First Name">
-                </div>
+        %>
+        <div class="w3-panel w3-pale-red w3-border">
+            <h5>Vui lòng sửa các lỗi bên dưới và thử lại!</h5>
+            <ul>
+                <%
+                    for (Map.Entry<String, String> entry: errors.entrySet()) {
+                        %>
+                        <li><%=entry.getValue()%></li>
+                        <%
+                    }
+                %>
+            </ul>
+        </div>
+        <%
+            }
+        %>
+        <form action="/admin/product/create" method="post" class="w3-container w3-card-4">
+            <div class="w3-margin">
+                <label>Name</label>
+                <input class="w3-input" type="text" name="name" value="<%=product.getName()%>">
+                <%
+                    if(errors.containsKey("name")) {
+
+                %>
+                <div class="w3-text-red w3-margin-top w3-margin-bottom">*<%=errors.get("name")%></div>
+                <%
+                    }
+                %>
+            </div>
+            <div class="w3-margin">
+                <label>Price</label>
+                <input class="w3-input" type="number" name="price" value="<%=product.getPrice()%>">
+                <%
+                    if(errors.containsKey("price")) {
+
+                %>
+                <div class="w3-text-red w3-margin-top w3-margin-bottom">*<%=errors.get("price")%></div>
+                <%
+                    }
+                %>
+            </div>
+            <div class="w3-margin">
+                <label>Description</label>
+                <input class="w3-input" type="text" name="description" value="<%=product.getDescription()%>">
+                <%
+                    if(errors.containsKey("description")) {
+
+                %>
+                <div class="w3-text-red w3-margin-top w3-margin-bottom">*<%=errors.get("description")%></div>
+                <%
+                    }
+                %>
+            </div>
+            <div class="w3-margin">
+                <label>Thumbnail</label>
+                <input class="w3-input" type="text" name="thumbnail" value="<%=product.getThumbnail()%>">
+                <%
+                    if(errors.containsKey("thumbnail")) {
+
+                %>
+                <div class="w3-text-red w3-margin-top w3-margin-bottom">*<%=errors.get("thumbnail")%></div>
+                <%
+                    }
+                %>
+            </div>
+            <div class="w3-margin">
+                <label>Status</label>
+                <input class="w3-input" type="number" name="status" value="<%=product.getStatus()%>">
+                <%
+                    if(errors.containsKey("status")) {
+
+                %>
+                <div class="w3-text-red w3-margin-top w3-margin-bottom">*<%=errors.get("status")%>></div>
+                <%
+                    }
+                %>
             </div>
 
-            <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
-                <div class="w3-rest">
-                    <input class="w3-input w3-border" name="last" type="text" placeholder="Last Name">
-                </div>
-            </div>
-
-            <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
-                <div class="w3-rest">
-                    <input class="w3-input w3-border" name="email" type="text" placeholder="Email">
-                </div>
-            </div>
-
-            <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-phone"></i></div>
-                <div class="w3-rest">
-                    <input class="w3-input w3-border" name="phone" type="text" placeholder="Phone">
-                </div>
-            </div>
-
-            <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i></div>
-                <div class="w3-rest">
-                    <input class="w3-input w3-border" name="message" type="text" placeholder="Message">
-                </div>
-            </div>
-
-            <p class="w3-center">
-                <button class="w3-button w3-section w3-blue w3-ripple"> Send</button>
-            </p>
+            <button class="w3-btn w3-blue w3-margin">Submit</button>
         </form>
     </div>
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <display-name>Custom Functions</display-name>
+    <tlib-version>1.0</tlib-version>
+    <uri>http://example.com/functions</uri>
+    <short-name>TestTag</short-name>
+
+    <function>
+        <name>addTwoNumber</name>
+        <function-class>com.t2004e.hellot2004e.util.DemoStaticFunction</function-class>
+        <function-signature>int addTwoNumber(int, int)</function-signature>
+    </function>
+</taglib>
