@@ -1,0 +1,29 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <tlib-version>2.0</tlib-version>
+    <uri>/WEB-INF/tlds/admin-template.tld</uri>
+
+    <function>
+        <name>getTemplateStyles</name>
+        <function-class>com.t1908e.WCD_assignment.util.AdminTemplateFunctions</function-class>
+        <function-signature>java.lang.String getTemplateStyles()</function-signature>
+    </function>
+    <function>
+        <name>getTemplateScripts</name>
+        <function-class>com.t1908e.WCD_assignment.util.AdminTemplateFunctions</function-class>
+        <function-signature>java.lang.String getTemplateScripts()</function-signature>
+    </function>
+    <function>
+        <name>getLeftMenu</name>
+        <function-class>com.t1908e.WCD_assignment.util.AdminTemplateFunctions</function-class>
+        <function-signature>java.lang.String getLeftMenu()</function-signature>
+    </function>
+    <function>
+        <name>getFooter</name>
+        <function-class>com.t1908e.WCD_assignment.util.AdminTemplateFunctions</function-class>
+        <function-signature>java.lang.String getFooter()</function-signature>
+    </function>
+</taglib>
