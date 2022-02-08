@@ -13,13 +13,9 @@ public class Member {
     private int id;
     private String username;
 
-
     @ManyToMany(mappedBy = "memberSet",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Set<ExchangeItem> exchangeItemSet;
-
-
-
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Credential> credentialSet;
