@@ -47,7 +47,7 @@ public class ApiAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     //login thanh cong
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        User user = (User)authResult.getPrincipal();
+        User user = (User) authResult.getPrincipal();
         Calendar currentTime = Calendar.getInstance();
         currentTime.add(Calendar.DATE, 7);
         String accessToken = JWT.create()
@@ -61,5 +61,4 @@ public class ApiAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         response.setContentType("application/json");
         response.getWriter().println(new Gson().toJson(map));
     }
-
 }

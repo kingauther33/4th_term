@@ -15,8 +15,9 @@ public class AccountApi {
 
     @Autowired
     AccountService accountService;
-    @RequestMapping(method = RequestMethod.POST,path = "register")
-    public Account register(@RequestBody AccountDTO accountDTO){
+
+    @RequestMapping(method = RequestMethod.POST, path = "register")
+    public Account register(@RequestBody AccountDTO accountDTO) {
         return accountService.create(accountDTO);
     }
 }
