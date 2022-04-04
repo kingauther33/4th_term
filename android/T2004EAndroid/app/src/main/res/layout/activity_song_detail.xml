@@ -87,7 +87,7 @@
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/ic_baseline_stop_circle_24"
-                android:tag="control_stop"/>
+                android:tag="control_stop" />
 
             <ImageView
                 android:id="@+id/song_detail_next"
@@ -96,5 +96,14 @@
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/ic_baseline_skip_next_24" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/song_detail_lyric"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/song_detail_controls"
+            android:text="Click to get lyrics"
+            android:textColor="#fff" />
+
     </RelativeLayout>
 </RelativeLayout>

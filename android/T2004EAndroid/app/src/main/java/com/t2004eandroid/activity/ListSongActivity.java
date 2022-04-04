@@ -9,6 +9,7 @@ import android.os.StrictMode;
 
 import com.t2004eandroid.R;
 import com.t2004eandroid.adapter.ListSongAdapter;
+import com.t2004eandroid.entity.ResponseSong;
 import com.t2004eandroid.entity.Song;
 import com.t2004eandroid.service.SongService;
 import com.t2004eandroid.util.RetrofitGenerator;
@@ -23,6 +24,7 @@ public class ListSongActivity extends AppCompatActivity {
 
     private SongService songService;
     private RecyclerView recyclerViewListSong;
+    private ResponseSong responseSong;
     private List<Song> songs;
 
     @Override
@@ -55,10 +57,10 @@ public class ListSongActivity extends AppCompatActivity {
             songService = RetrofitGenerator.createService(SongService.class); // thêm token nếu cần
         }
         try {
-            Response<List<Song>> listResponse = songService.getSong().execute();
-            if (listResponse.isSuccessful()) {
+            Response<ResponseSong> responseSongResponse = songService.getSong().execute();
+            if (responseSongResponse.isSuccessful()) {
                 songs.clear();
-                songs.addAll(listResponse.body());
+                songs.addAll(responseSongResponse.body().getData());
                 ((RecyclerView.Adapter) recyclerViewListSong.getAdapter()).notifyDataSetChanged();
             }
         } catch (IOException e) {

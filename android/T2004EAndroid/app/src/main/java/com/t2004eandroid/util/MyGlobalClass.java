@@ -3,15 +3,10 @@ package com.t2004eandroid.util;
 import android.app.Application;
 import android.media.MediaPlayer;
 
-public class MyGlobalClass extends Application {
-    public MediaPlayer mediaPlayer;
+public class MyGlobalClass {
+    private static MediaPlayer mediaPlayer;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    public MediaPlayer getMediaPlayer() {
+    public static MediaPlayer getMediaPlayer() {
         if (mediaPlayer == null) {
             mediaPlayer = new MediaPlayer();
         }
