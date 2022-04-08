@@ -25,12 +25,12 @@
             android:paddingBottom="20dp"
             android:paddingLeft="40dp"
             android:paddingRight="40dp"
-            android:text="Artist" />
+            android:text="Name" />
 
         <TextView
             android:id="@+id/product_quantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:text="Singer" />
+            android:text="Quantity" />
 </LinearLayout>
