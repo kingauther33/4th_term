@@ -34,9 +34,9 @@ public class ListProductAdapter extends RecyclerView.Adapter<ListProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Product currentProduct = products.get(position);
-        holder.idView.setText(currentProduct.getId());
+        holder.idView.setText(String.valueOf(currentProduct.getId()));
         holder.productNameView.setText(currentProduct.getName());
-        holder.productQuantityView.setText(currentProduct.getQuantity());
+        holder.productQuantityView.setText(String.valueOf(currentProduct.getQuantity()));
     }
 
     @Override
