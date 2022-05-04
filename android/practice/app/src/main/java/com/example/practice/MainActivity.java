@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-
-
                 int productQuantity = Integer.parseInt(productQuantityBeforeConvert);
 
                 Product product = new Product();
