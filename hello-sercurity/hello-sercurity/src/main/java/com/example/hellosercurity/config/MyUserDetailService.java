@@ -27,7 +27,7 @@ public class MyUserDetailService implements UserDetailsService {
         }
         Account account = optionalAccount.get();
         Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
-        if (account.getRole() == 1){
+        if (account.getRole() == 1) {
             simpleGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
         }else if (account.getRole() == 2){
             simpleGrantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
